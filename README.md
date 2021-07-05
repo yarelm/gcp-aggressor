@@ -21,7 +21,7 @@ gcloud iam service-accounts create agressor
 ```
 * Grant this service account log write permissions:
 ```
-gcloud projects add-iam-policy-binding $PROJECT_ID --member "serviceAccount:agressor@$PROJECT_ID.iam.gserviceaccount.com" --role "roles/logging.logWriter"
+gcloud projects add-iam-policy-binding $PROJECT_ID --member "serviceAccount:agressor@$PROJECT_ID.iam.gserviceaccount.com" --role "roles/logging.logWriter" --role "roles/compute.securityAdmin"
 ```
 * Create the aggressor GCP workflow:
 ```
