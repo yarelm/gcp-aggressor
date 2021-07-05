@@ -9,27 +9,27 @@ Whitelist egress traffic to dynamic hostname targets in GCP
 ### Setting up the GCP Workflow
 * Create a service account for aggressor GCP workflow:
 ```
-gcloud iam service-accounts create agressor
+gcloud iam service-accounts create aggressor
 ```
 * Grant this service account log write permissions:
 ```
-gcloud projects add-iam-policy-binding $PROJECT_ID --member "serviceAccount:agressor@$PROJECT_ID.iam.gserviceaccount.com" --role "roles/logging.logWriter" 
+gcloud projects add-iam-policy-binding $PROJECT_ID --member "serviceAccount:aggressor@$PROJECT_ID.iam.gserviceaccount.com" --role "roles/logging.logWriter" 
 ```
 * Grant this service account security admin permissions:
 ```
-gcloud projects add-iam-policy-binding $PROJECT_ID --member "serviceAccount:agressor@$PROJECT_ID.iam.gserviceaccount.com" --role "roles/compute.securityAdmin"
+gcloud projects add-iam-policy-binding $PROJECT_ID --member "serviceAccount:aggressor@$PROJECT_ID.iam.gserviceaccount.com" --role "roles/compute.securityAdmin"
 ```
 * Create the aggressor GCP workflow:
 ```
 gcloud workflows deploy aggressor \
 --source=aggressor.yaml \
---service-account=agressor@yarel-playground.iam.gserviceaccount.com
+--service-account=aggressor@yarel-playground.iam.gserviceaccount.com
 ```
 
 ### Setting up the global deny-all firewall rule
 * Create a deny-all firewall rule 
 ```
-gcloud compute --project=$PROJECT_ID firewall-rules create agressor-deny-all --direction=EGRESS --priority=1000 --network=$NETWORK_NAME --action=DENY --rules=all --destination-ranges=0.0.0.0/0
+gcloud compute --project=$PROJECT_ID firewall-rules create aggressor-deny-all --direction=EGRESS --priority=1000 --network=$NETWORK_NAME --action=DENY --rules=all --destination-ranges=0.0.0.0/0
 ```
 
 ### Setting up service account for cloud scheduler
