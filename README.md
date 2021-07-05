@@ -11,7 +11,7 @@ Whitelist egress traffic to dynamic hostname targets in GCP
 ```
 gcloud iam service-accounts create agressor
 ```
-* Grant this service account log write permissions:
+* Grant this service account log write and security admin permissions:
 ```
 gcloud projects add-iam-policy-binding $PROJECT_ID --member "serviceAccount:agressor@$PROJECT_ID.iam.gserviceaccount.com" --role "roles/logging.logWriter" --role "roles/compute.securityAdmin"
 ```
@@ -47,14 +47,14 @@ As an example we will whitelist `google.com`. This can be done to any hostname, 
 
 ### Setting firewall rules
 
-* Create a stub firewall rule to whitelist access to google.com:
+* Create a stub firewall rule to whitelist access to google.com (with a fake CIDR range which will get modified by the workflow):
 ```
-gcloud compute --project=$PROJECT_ID firewall-rules create aggressor-google-com --direction=EGRESS --priority=250 --network=$NETWORK_NAME --action=ALLOW --rules=all --destination-ranges=0.0.0.0/0
+gcloud compute --project=$PROJECT_ID firewall-rules create aggressor-google-com --direction=EGRESS --priority=250 --network=$NETWORK_NAME --action=ALLOW --rules=all --destination-ranges=1.1.1.1/32
 ```
 
 ### Setting the Cloud Scheduler job
 
-* Create a Cloud Scheduler job:
+* Create a Cloud Scheduler job for this hostname:
 ```
 gcloud scheduler jobs create http aggressor-google-com \
   --schedule="*/5 * * * *" \
