@@ -20,10 +20,18 @@ main:
               next: iterate
         next: define_url 
     - iterate:
+        switch:
+            - condition: ${answers[i].type == 1}
+              next: assign_result
+        next: just_iterate
+    - just_iterate:
         assign:
-            - result: ${result + answers[i].data + ","}
             - i: ${i+1}
         next: check_condition
+    - assign_result:
+        assign:
+            - result: ${result + answers[i].data + ","}
+        next: just_iterate
     - define_url:
         assign:
               - result_len: ${len(result)}
