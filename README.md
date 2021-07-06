@@ -1,6 +1,8 @@
 # gcp-aggressor
 Whitelist egress traffic to dynamic hostname targets in GCP
 
+Important Note: It will only work with domains which returns consistent DNS A records for different clients. For example, if the DNS server is configured to return results based on geoproximity, the aggressor might get different results than your client, if for example they are running in different regions.
+
 
 # HOWTO
 
