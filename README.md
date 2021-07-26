@@ -53,23 +53,23 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
 
 # Per-hostname Setup
 
-As an example we will whitelist `google.com`. This can be done to any hostname, and should be repeated per hostname.
+As an example we will whitelist `doit-intl.com`. This can be done to any hostname, and should be repeated per hostname.
 
 ### Setting firewall rules
 
-* Create a stub firewall rule to whitelist access to google.com (with a fake CIDR range which will get modified by the workflow):
+* Create a stub firewall rule to whitelist access to `doit-intl.com` (with a fake CIDR range which will get modified by the workflow):
 ```
-gcloud compute --project=$PROJECT_ID firewall-rules create aggressor-google-com --direction=EGRESS --priority=250 --network=$NETWORK_NAME --action=ALLOW --rules=all --destination-ranges=1.1.1.1/32
+gcloud compute --project=$PROJECT_ID firewall-rules create aggressor-doit-com --direction=EGRESS --priority=250 --network=$NETWORK_NAME --action=ALLOW --rules=all --destination-ranges=1.1.1.1/32
 ```
 
 ### Setting the Cloud Scheduler job
 
 * Create a Cloud Scheduler job for this hostname:
 ```
-gcloud scheduler jobs create http aggressor-google-com \
+gcloud scheduler jobs create http aggressor-doit-com \
   --schedule="*/5 * * * *" \
   --uri="https://workflowexecutions.googleapis.com/v1/projects/$PROJECT_ID/locations/$REGION_NAME/workflows/aggressor/executions" \
-  --message-body="{\"argument\": \"{\\n    \\\"hostname\\\": \\\"google.com\\\",\\n    \\\"ruleName\\\": \\\"aggressor-google-com\\\"\\n}\"}" \
+  --message-body="{\"argument\": \"{\\n    \\\"hostname\\\": \\\"doit-intl.com\\\",\\n    \\\"ruleName\\\": \\\"aggressor-doit-com\\\"\\n}\"}" \
   --time-zone="Etc/UTC" \
   --oauth-service-account-email="aggressor-scheduler@$PROJECT_ID.iam.gserviceaccount.com"
 ```
