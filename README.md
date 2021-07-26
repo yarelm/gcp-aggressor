@@ -1,7 +1,7 @@
 # gcp-aggressor
 Whitelist egress traffic to dynamic hostname targets in GCP.
 
-As an important least privelege security principle, if you know different components in your GCP projects only communicate towards a handful of domain names, you may want to whitelist traffic towards these domains, and blocking all other traffic to the internet.
+As an important least privelege security principle, if you know different components in your GCP projects only communicate towards a handful of domain names, you may want to whitelist traffic towards these domains, and block all other traffic to the internet.
 
 GCP Aggressor will periodically resolve your requested domain names A records using Google DNS, and will automatically configure GCP firewall rules to only allow traffic to these IPs.
 
