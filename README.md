@@ -29,7 +29,7 @@ gcloud projects add-iam-policy-binding $PROJECT_ID --member "serviceAccount:aggr
 ```
 gcloud workflows deploy aggressor \
 --source=aggressor.yaml \
---service-account=aggressor@yarel-playground.iam.gserviceaccount.com
+--service-account=aggressor@$PROJECT_ID.iam.gserviceaccount.com
 ```
 
 ### Setting up the global deny-all firewall rule
